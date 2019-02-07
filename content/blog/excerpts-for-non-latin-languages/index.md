@@ -35,8 +35,8 @@ gatsby-starter-blogを使っている場合は、`src/pages/index.js`を次の�
      allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {
        edges {
          node {
--          excerpt(truncate: true)
-+          excerpt
+-          excerpt
++          excerpt(truncate: true)
            fields {
              slug
            }
