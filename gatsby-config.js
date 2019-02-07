@@ -3,10 +3,7 @@ module.exports = {
     title: `かちのぶろぐ`,
     author: `かち`,
     description: `かちのかちによるかちのためのかちあるぶろぐ`,
-    siteUrl: `https://gatsby-starter-blog-demo.netlify.com/`,
-    social: {
-      twitter: `kylemathews`,
-    },
+    siteUrl: `https://n.k-kachi.net/`,
   },
   plugins: [
     {
