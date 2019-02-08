@@ -5,6 +5,7 @@ exports.createPages = ({ graphql, actions }) => {
   const { createPage } = actions
 
   const blogPost = path.resolve(`./src/templates/blog-post.js`)
+  const markdownPage = path.resolve(`./src/templates/markdown-page.js`)
   return graphql(
     `
       {
@@ -37,8 +38,10 @@ exports.createPages = ({ graphql, actions }) => {
 
     // Create blog posts pages.
     const posts = result.data.allMarkdownRemark.edges
+    const blog_posts = posts.filter((post, _) => post.node.fields.slug.indexOf("/blog/") > -1)
+    const other_posts = posts.filter((post, _) => post.node.fields.slug.indexOf("/blog/") === -1)
 
-    posts.forEach((post, index) => {
+    blog_posts.forEach((post, index) => {
       const previous = index === posts.length - 1 ? null : posts[index + 1].node
       const next = index === 0 ? null : posts[index - 1].node
 
@@ -52,6 +55,18 @@ exports.createPages = ({ graphql, actions }) => {
           date: post.node.frontmatter.date,
           previous,
           next,
+        },
+      })
+    })
+
+    other_posts.forEach((post, index) => {
+      createPage({
+        path: post.node.fields.slug,
+        component: markdownPage,
+        context: {
+          slug: post.node.fields.slug,
+          excerpt: post.node.excerpt,
+          title: post.node.frontmatter.title,
         },
       })
     })

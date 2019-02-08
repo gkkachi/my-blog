@@ -1,5 +1,5 @@
 import React from "react"
-import { StaticQuery, graphql } from "gatsby"
+import { StaticQuery, graphql, Link } from "gatsby"
 import Image from "gatsby-image"
 
 import { rhythm } from "../utils/typography"
@@ -31,7 +31,7 @@ function Bio() {
               }}
             />
             <p>
-              吾輩は<strong>{author}</strong>である。知識はまだない。
+              吾輩は<Link to="/about/"><strong>{author}</strong></Link>である。知識はまだない。
             </p>
           </div>
         )
