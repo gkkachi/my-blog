@@ -14,6 +14,11 @@ exports.createPages = ({ graphql, actions }) => {
         ) {
           edges {
             node {
+              frontmatter {
+                title
+                date
+              }
+              excerpt(truncate: true)
               fields {
                 slug
               }
@@ -42,6 +47,9 @@ exports.createPages = ({ graphql, actions }) => {
         component: blogPost,
         context: {
           slug: post.node.fields.slug,
+          excerpt: post.node.excerpt,
+          title: post.node.frontmatter.title,
+          date: post.node.frontmatter.date,
           previous,
           next,
         },
@@ -54,7 +62,10 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
   const { createNodeField } = actions
 
   if (node.internal.type === `MarkdownRemark`) {
-    const value = createFilePath({ node, getNode })
+    let value = createFilePath({ node, getNode })
+    if (node.fileAbsolutePath.indexOf(`content/blog`) > -1) {
+      value = `/blog${value}`
+    }
     createNodeField({
       name: `slug`,
       node,
