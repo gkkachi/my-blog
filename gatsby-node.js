@@ -15,11 +15,6 @@ exports.createPages = ({ graphql, actions }) => {
         ) {
           edges {
             node {
-              frontmatter {
-                title
-                date
-              }
-              excerpt(truncate: true)
               fields {
                 slug
               }
@@ -50,9 +45,6 @@ exports.createPages = ({ graphql, actions }) => {
         component: blogPost,
         context: {
           slug: post.node.fields.slug,
-          excerpt: post.node.excerpt,
-          title: post.node.frontmatter.title,
-          date: post.node.frontmatter.date,
           previous,
           next,
         },

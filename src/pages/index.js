@@ -10,7 +10,7 @@ class BlogIndex extends React.Component {
   render() {
     const { data } = this.props
     const siteTitle = data.site.siteMetadata.title
-    const posts = data.allSitePage.edges
+    const posts = data.allMarkdownRemark.edges
 
     return (
       <Layout location={this.props.location} title={siteTitle}>
@@ -19,22 +19,23 @@ class BlogIndex extends React.Component {
           keywords={[`blog`, `gatsby`, `javascript`, `react`]}
         />
         <Bio />
-        {posts.map(({ node }) => {
-          const c = node.context
-          const title = c.title || c.slug
+        {posts
+        .filter(({ node }) => node.fields.slug.startsWith("/blog/"))
+        .map(({ node }) => {
+          const title = node.frontmatter.title || node.fields.slug
           return (
-            <div key={c.slug}>
+            <div key={node.fields.slug}>
               <h3
                 style={{
                   marginBottom: rhythm(1 / 4),
                 }}
               >
-                <Link style={{ boxShadow: `none` }} to={c.slug}>
+                <Link style={{ boxShadow: `none` }} to={node.fields.slug}>
                   {title}
                 </Link>
               </h3>
-              <small>{c.date}</small>
-              <p dangerouslySetInnerHTML={{ __html: c.excerpt }} />
+              <small>{node.frontmatter.date}</small>
+              <p dangerouslySetInnerHTML={{ __html: node.excerpt }} />
             </div>
           )
         })}
@@ -52,12 +53,14 @@ export const pageQuery = graphql`
         title
       }
     }
-    allSitePage(sort: {fields: [context___date], order: DESC}, filter: {path: {regex: "/^\/blog\/.*\/$/"}}) {
+    allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {
       edges {
         node {
-          context {
+          excerpt(truncate: true)
+          fields {
             slug
-            excerpt
+          }
+          frontmatter {
             title
             date(formatString: "YYYY年MM月DD日")
           }
