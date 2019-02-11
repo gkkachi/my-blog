@@ -1,4 +1,5 @@
 const path = require(`path`)
+const _ = require("lodash")
 const { createFilePath } = require(`gatsby-source-filesystem`)
 
 exports.createPages = ({ graphql, actions }) => {
@@ -33,8 +34,7 @@ exports.createPages = ({ graphql, actions }) => {
 
     // Create blog posts pages.
     const posts = result.data.allMarkdownRemark.edges
-    const blog_posts = posts.filter((post, _) => post.node.fields.slug.indexOf("/blog/") > -1)
-    const other_posts = posts.filter((post, _) => post.node.fields.slug.indexOf("/blog/") === -1)
+    const [blog_posts, other_posts] = _.partition(posts, post => post.node.fields.slug.indexOf("/blog/") > -1)
 
     blog_posts.forEach((post, index) => {
       const previous = index === blog_posts.length - 1 ? null : blog_posts[index + 1].node
