@@ -1,6 +1,7 @@
 ---
 title: Gatsbyのブログで日本語記事の抜粋（excerpt）を正しく表示させる方法
 date: "2019-02-07T04:51:05.634Z"
+tags: ["gatsby"]
 ---
 
 ## TL;DR

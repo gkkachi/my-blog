@@ -1,6 +1,7 @@
 ---
 title: gatsby-starter-blogで生成されるブログポストのURLを変更する
 date: '2019-02-09T14:00:00.546Z'
+tags: ["gatsby"]
 ---
 
 ## はじめに

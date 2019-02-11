@@ -1,6 +1,7 @@
 ---
 title: Gatsbyにコメント機能を追加 by using Disqus
 date: "2019-02-04T05:41:55.341Z"
+tags: ["gatsby", "disqus"]
 ---
 
 本ブログに[Disqus](https://disqus.com/)を使ってコメント機能を追加しました。
